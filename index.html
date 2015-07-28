@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Course Information</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="styles/jquery-ui.css">
+  <script src="scripts/jquery-1.10.2.js"></script>
+  <script src="scripts/jquery-ui.js"></script>
+  
+  <script>
+  $(function() {
+    var availableTags = [
+      "",
+      ""
+    ];
+    
+    $.ajax({
+            url: 'values.txt',
+            type: 'GET',
+            data: {},
+            async: false, //blocks window close
+            success : function(data) {
+				availableTags = data.split('\n');
+			}
+        });
+    $( "#course" ).autocomplete({
+		source: availableTags
+    });
+  });
+  </script>
+  
+</head>
+<body>
+
+<div class="container" style="height: 100%; margin-top: 5%;">
+  <h2 align="center">Course Information</h2>
+  <br>
+  <p align="center">2015-16 SEM I</p>
+  <form style="margin-top: 8%;">
+    <div class="form-group" style="width: 60%; margin-left: 20%;">
+      <label for="Course">Course Number:</label>
+      <input type="text" class="form-control" id="course" placeholder="Enter Course Number">
+    </div>
+	
+	<div align="center">
+		<button class="btn btn-default" id="getinfobutton">Submit</button>
+	</div>
+  </form>
+</div>
+
+<script>
+
+	$("#getinfobutton").click(function(event){
+		event.preventDefault();
+		window.location.assign("getinfo.php?q="+document.getElementById('course').value.split(' : ')[0]);
+	});
+
+</script>
+
+</body>
+</html>
